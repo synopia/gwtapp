@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="accounts">
+	<inherits name="com.google.gwt.user.User"/>
+	
+	<inherits name="fr.putnami.pwt.core.model.Model"/>
+	<inherits name="fr.putnami.pwt.core.service.Service"/>
+	<inherits name="fr.putnami.pwt.core.mvp.Mvp"/>
+	<inherits name="fr.putnami.pwt.core.widget.Widget"/>
+	<inherits name="fr.putnami.pwt.core.error.DefaultErrorDisplayer"/>
+
+	<source path="client"/>
+	<source path="shared"/>
+	
+	<add-linker name="xsiframe" />
+</module>

@@ -1,0 +1,35 @@
+evaluationDependsOn(":user")
+apply plugin: 'gwt'
+apply plugin: 'jetty'
+
+dependencies {
+    compile project(':user')
+    compile project(':contacts')
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+
+}
+gwt {
+    gwtDev {
+        jvmArgs('-Xdebug',  '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000')
+    }
+
+    modules = ['org.synopia.gwtapp.Main']
+    devModules = ['org.synopia.gwtapp.MainDev']
+
+    superDev {
+        noPrecompile=true
+    }
+
+    src +=files(project(':user').sourceSets.main.allJava.srcDirs) + files(project(':user').sourceSets.main.output.resourcesDir)
+}
+
+/**
+ *	Use of Jetty plugin with draft GWT compilation
+ */
+task jettyDraftWar(type: JettyRunWar) {
+    dependsOn draftWar
+    dependsOn.remove('war')
+    webApp=draftWar.archivePath
+}
+
+

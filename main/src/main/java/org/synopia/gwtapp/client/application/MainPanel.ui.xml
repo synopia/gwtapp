@@ -1,0 +1,29 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:a="urn:import:fr.putnami.pwt.core.widget.client"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	>
+
+	<a:HTMLPanel>
+		<a:Affix ui:field="affixMenu">
+			<a:HTMLPanel >
+				<a:Navbar position="STATIC_TOP">
+					<a:Brand>
+						<a:Anchor text="GWTAPP" link="#" />
+					</a:Brand>
+					<a:Nav>
+						<a:NavLink label="Address book" link="#!AddressBook"/>
+						<a:NavLink label="Contact Table" link="#!Contacts"/>
+					</a:Nav>
+                    <a:right>
+                        <g:SimplePanel ui:field="login"/>
+                    </a:right>
+				</a:Navbar>
+			</a:HTMLPanel>
+		</a:Affix>
+		<g:SimplePanel ui:field="viewContainer" />
+		<footer class="putnami-sample-footer"> 
+			<p>Using <a href="https://pwt.putnami.org" target="_blank">PWT - Putnami Web Framework</a>.</p>
+		</footer>		
+	</a:HTMLPanel>
+</ui:UiBinder>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="gwtapp">
+	<inherits name="com.google.gwt.user.User"/>
+    <inherits name="com.google.gwt.inject.Inject"/>
+	<inherits name="fr.putnami.pwt.core.model.Model"/>
+	<inherits name="fr.putnami.pwt.core.service.Service"/>
+	<inherits name="fr.putnami.pwt.core.mvp.Mvp"/>
+	<inherits name="fr.putnami.pwt.core.widget.Widget"/>
+	<inherits name="fr.putnami.pwt.core.error.DefaultErrorDisplayer"/>
+    <inherits name="org.synopia.gwtapp.user.User"/>
+    <inherits name="org.synopia.gwtapp.contacts.Contacts"/>
+
+	<entry-point class="org.synopia.gwtapp.client.Main"/>
+
+	<source path="client"/>
+	<source path="shared"/>
+	
+	<add-linker name="xsiframe" />
+</module>

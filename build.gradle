@@ -1,0 +1,97 @@
+buildscript {
+    repositories {
+        maven { url 'http://repo.putnami.org' }
+        maven { url = "http://dl.bintray.com/steffenschaefer/maven" }
+    }
+    dependencies {
+        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.5'
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'gwt-base'
+    apply plugin: 'idea'
+
+    group = 'org.synopia.gwtapp'
+    version = '0.1.0'
+
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+
+    ext {
+        pwtVersion = '1.0.1-SNAPSHOT'
+    }
+
+    configurations {
+        log4j
+    }
+
+    dependencies {
+        log4j 'org.slf4j:slf4j-api:1.6.1'
+        log4j 'org.slf4j:jcl-over-slf4j:1.6.1'
+        log4j 'org.slf4j:slf4j-log4j12:1.6.1'
+        log4j 'log4j:log4j:1.2.16'
+
+        runtime configurations.log4j
+
+        compile 'org.slf4j:slf4j-api:1.6.1'
+        compile "fr.putnami.pwt:pwt:$pwtVersion"
+        compile "javax.validation:validation-api:1.0.0.GA"
+        compile 'com.google.gwt.inject:gin:2.1.2'
+        compile 'com.google.gwt.eventbinder:eventbinder:1.1.0'
+
+        testCompile 'junit:junit:4.+'
+    }
+    sourceSets.main.resources.srcDir 'src/main/java'
+
+    jar {
+        from sourceSets.main.allJava
+    }
+    repositories {
+        maven(){ url 'http://repo.putnami.org' }
+        mavenLocal()
+        mavenCentral()
+    }
+
+    gwt {
+        gwtVersion = '2.6.1'
+    }
+
+    def GWT_XML_TEMPLATE="""<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="${project.name}">
+\t<inherits name="com.google.gwt.user.User"/>
+\t
+\t<inherits name="fr.putnami.pwt.core.model.Model"/>
+\t<inherits name="fr.putnami.pwt.core.service.Service"/>
+\t<inherits name="fr.putnami.pwt.core.mvp.Mvp"/>
+\t<inherits name="fr.putnami.pwt.core.widget.Widget"/>
+\t<inherits name="fr.putnami.pwt.core.error.DefaultErrorDisplayer"/>
+
+\t<source path="client"/>
+\t<source path="shared"/>
+\t
+\t<add-linker name="xsiframe" />
+</module>"""
+    def groupDir = group.replaceAll("\\.", "/")
+    task makedirs << {
+        [
+                "client/view",
+                "server",
+                "shared/constant",
+                "shared/domain",
+                "shared/service"
+        ].each {String subDir ->
+            new File(project.projectDir, "src/main/java/${groupDir}/${project.name}/${subDir}").mkdirs()
+        }
+        def gwtFileName = "${project.name.capitalize()}.gwt.xml"
+
+        def file = new File(project.projectDir, "src/main/java/${groupDir}/${gwtFileName}")
+        print( file )
+        file.createNewFile()
+        file.write(GWT_XML_TEMPLATE)
+
+    }
+}
+
+

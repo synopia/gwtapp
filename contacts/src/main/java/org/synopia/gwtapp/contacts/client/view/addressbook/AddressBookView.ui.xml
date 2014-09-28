@@ -1,0 +1,117 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+			xmlns:w="urn:import:fr.putnami.pwt.core.widget.client"
+        >
+
+	<w:HTMLPanel>
+		<w:GridRow>
+			<w:GridColumn size="3">
+				<div class="form-group">
+					<div class="input-group">
+						<w:InputText ui:field="searchBox" placeholder="Filter..." />
+						<span class="input-group-btn"><w:Button ui:field="searchResetButton" iconType="CANCEL" /></span>
+					</div>
+				</div>
+				<w:OutputList ui:field="groupsList" type="LIST_GROUP">
+					<w:Form  ui:field="groupItemTemplate">
+						<span class="badge pull-right"><w:OutputNumber path="memberSize" tag="span" /></span>
+						<w:Anchor ui:field="selectGroupAnchor"><w:OutputText ui:field="name" path="name" tag="span"/></w:Anchor>
+						<span class="clearfix" />
+					</w:Form>
+				</w:OutputList>
+			</w:GridColumn>
+			<w:GridColumn size="3">
+				<w:ScrollPanel offsetTop="70">
+					<w:OutputList ui:field="contactsList" type="LIST">
+						<w:Form ui:field="contactItemTemplate">
+							<strong><w:Anchor ui:field="openContactAnchor"><w:OutputText ui:field="contactName" path="name" tag="span"/></w:Anchor></strong>
+							 - <w:OutputText path="address.city" tag="span" />
+							<hr />
+						</w:Form>
+					</w:OutputList>
+				</w:ScrollPanel>
+			</w:GridColumn>
+			<w:GridColumn size="6">
+				<w:Form ui:field="contactDetails" layout="HORIZONTAL">
+					<w:Fieldset>
+						<w:Legend>
+							<w:GridRow ui:field="editNameRow">
+								<w:GridColumn size="3" offset="3">
+									<w:InputSelect path="gender"/>
+								</w:GridColumn>
+								<w:GridColumn size="6">
+									<w:InputText path="name"/>
+								</w:GridColumn>
+							</w:GridRow>
+							<w:GridRow ui:field="viewNameRow">
+								<w:GridColumn size="9" offset="3">
+									<w:OutputEnum path="gender" tag="span"/> 
+									<strong>
+										<w:OutputText path="name" tag="span"/>
+									</strong>
+								</w:GridColumn>
+							</w:GridRow>
+						</w:Legend>
+						<w:FormGroup path="birthday" />
+						<w:FormGroup path="emails" >
+							<w:InputList>
+								<w:InputEmail />
+							</w:InputList>
+							<w:OutputList >
+								<w:OutputEmail />
+							</w:OutputList>
+						</w:FormGroup>
+						<w:FormGroup>
+							<w:Label path="address" />
+							<w:InputGroup style="UNSTYLED">
+								<w:GridRow>
+									<w:GridColumn size="12">
+										<w:InputText path="address.street" placeholder="number, street" />
+									</w:GridColumn>
+								</w:GridRow>
+								<w:GridRow>
+									<w:GridColumn size="3">
+										<w:InputText path="address.postCode" placeholder="postcode"/>
+									</w:GridColumn>
+									<w:GridColumn size="9">
+										<w:InputText path="address.city" placeholder="city"/>
+									</w:GridColumn>
+								</w:GridRow>
+							</w:InputGroup>
+							<w:OutputGroup>
+								<w:OutputText path="address.street" />
+								<w:OutputText path="address.postCode" tag="span" />
+								<w:Text>&nbsp;-&nbsp;</w:Text>
+								<w:OutputText path="address.city" tag="span" />
+							</w:OutputGroup>
+						</w:FormGroup>
+						<w:FormGroup path="groups">
+							<w:InputMultiSelect ui:field="groupSelect"/>
+							<w:OutputList >
+								<w:OutputText />
+							</w:OutputList>
+						</w:FormGroup>
+						<hr/>
+						<w:FormGroup path="remarks" >
+							<w:InputTextArea />
+						</w:FormGroup>
+					</w:Fieldset>
+				</w:Form>
+			</w:GridColumn>
+		</w:GridRow>
+		<w:Affix offsetBottom="140" fixBottom="20" layerIndex="900">
+			<w:GridRow>
+				<w:GridColumn size="5" offset="6" styleName="sample-contact-actions">
+					<w:ButtonGroup>
+						<w:Button ui:field="newContactButton" iconType="ADD" text="New contact" type="LINK"/>
+						<w:Button ui:field="editContactButton" iconType="EDIT" text="Edit contact" type="LINK"/>
+					</w:ButtonGroup>
+					<w:ButtonGroup styleName="pull-right">
+						<w:Button ui:field="cancelContactButton" iconType="CANCEL" text="Cancel"/>
+						<w:Button ui:field="saveContactButton" iconType="SAVE" text="Save" type="PRIMARY" />
+					</w:ButtonGroup>
+				</w:GridColumn>
+			</w:GridRow>
+		</w:Affix>
+    </w:HTMLPanel>
+</ui:UiBinder>

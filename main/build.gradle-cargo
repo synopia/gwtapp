@@ -1,0 +1,114 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'gwt'
+apply plugin: 'cargo'
+
+
+group = 'fr.putnami.pwt'
+version = '1.0.0-SNAPSHOT'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+buildscript {
+	repositories {
+		maven (){ url 'http://repo.putnami.org' }
+		jcenter()
+	}
+	dependencies {
+		classpath 'org.gradle.api.plugins:gradle-cargo-plugin:1.5'
+		classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.4-PWT_patched'
+	}
+}
+
+ext {
+	pwtVersion = '1.0.0'
+}
+	
+configurations {
+	log4j
+}
+
+repositories {
+	maven (){ url 'http://repo.putnami.org' }
+	mavenLocal()
+	mavenCentral()
+}
+
+dependencies {	
+	log4j 'org.slf4j:slf4j-api:1.6.1'
+	log4j 'org.slf4j:jcl-over-slf4j:1.6.1'
+	log4j 'org.slf4j:slf4j-log4j12:1.6.1'
+	log4j 'log4j:log4j:1.2.16'
+
+	runtime configurations.log4j	
+
+	compile "fr.putnami.pwt:pwt:$pwtVersion"
+	
+	testCompile 'junit:junit:4.+'
+	
+}
+
+gwt {
+	gwtVersion='2.6.0'
+
+	gwtDev {
+		jvmArgs('-Xdebug',  '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000')
+	}
+	
+	modules = ['fr.putnami.pwt.sample.web.SampleWeb']
+	devModules = ['fr.putnami.pwt.sample.web.SampleWebDev']
+
+	superDev {
+		noPrecompile=true
+	}
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.web
+        }
+    }
+}
+
+/**
+*	Tasks and configuration below are for use of Cargo with draft GWT compilation
+*/
+
+ext {
+	cargoConfigHomeDir = file("$buildDir/cargo/conf")
+}
+cargo {
+	containerId = 'jetty9x'
+	port = 8080
+
+	deployable {
+		file = tasks.draftWar.archivePath
+		context = '/'
+	}
+
+	local {
+		installer {
+			installUrl = 'http://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.1.5.v20140505/jetty-distribution-9.1.5.v20140505.tar.gz'
+
+			downloadDir = file("$projectDir/cargo/download")
+			extractDir = file("$projectDir/cargo/extract")
+		}
+		//If you want to provide your own distribution
+		//homeDir = file("$projectDir/cargo/extract/jetty-distribution-9.1.5.v20140505/jetty-distribution-9.1.5.v20140505")		
+		configHomeDir = file("$cargoConfigHomeDir")
+		outputFile = file("$buildDir/cargo/cargoOutput.log")
+	}
+}
+
+task cargoCreateConfigHomeDir << {
+	file("$cargoConfigHomeDir").mkdirs()
+}
+
+// Auto run draftWar when cargo is launching
+afterEvaluate {
+	tasks.cargoStartLocal.dependsOn(tasks.draftWar, tasks.cargoCreateConfigHomeDir)
+	tasks.cargoRunLocal.dependsOn(tasks.draftWar, tasks.cargoCreateConfigHomeDir)
+}

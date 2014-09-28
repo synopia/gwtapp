@@ -1,0 +1,17 @@
+.sample-contact-actions {
+	background-color : white;
+	border: 1px solid #ddd;
+	border-radius : 4px;
+	padding: 5px 15px;
+}
+div.putnami-sample-header{
+	background-color: #FFF;
+	height: 55px;
+}
+footer.putnami-sample-footer{
+	height: 120px;
+	text-align: center;
+	margin-top: 50px;
+	padding: 49px 0;
+	border: 1px solid #CCC;
+}

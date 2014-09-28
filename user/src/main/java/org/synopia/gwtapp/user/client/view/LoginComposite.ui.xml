@@ -1,0 +1,13 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:a="urn:import:fr.putnami.pwt.core.widget.client"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+        >
+
+    <g:HTMLPanel>
+        Login <g:TextBox ui:field="login"/>
+        Password <g:PasswordTextBox ui:field="password"/>
+        <g:Button ui:field="submit" text="Login"/>
+    </g:HTMLPanel>
+
+</ui:UiBinder>
