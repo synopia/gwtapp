@@ -9,11 +9,17 @@ buildscript {
 }
 
 subprojects {
+    repositories {
+        maven(){ url 'http://repo.putnami.org' }
+        mavenLocal()
+        mavenCentral()
+    }
+
     apply plugin: 'java'
     apply plugin: 'gwt-base'
     apply plugin: 'idea'
 
-    group = 'org.synopia.gwtapp'
+    group   = 'org.synopia.gwtapp'
     version = '0.1.0'
 
     sourceCompatibility = 1.7
@@ -23,6 +29,9 @@ subprojects {
         pwtVersion = '1.0.1-SNAPSHOT'
     }
 
+    gwt {
+        gwtVersion = '2.6.1'
+    }
     configurations {
         log4j
     }
@@ -43,20 +52,15 @@ subprojects {
 
         testCompile 'junit:junit:4.+'
     }
+
+    // include java source files to make gwt compiler work
     sourceSets.main.resources.srcDir 'src/main/java'
 
     jar {
         from sourceSets.main.allJava
     }
-    repositories {
-        maven(){ url 'http://repo.putnami.org' }
-        mavenLocal()
-        mavenCentral()
-    }
 
-    gwt {
-        gwtVersion = '2.6.1'
-    }
+    // *.gwt.xml template
 
     def GWT_XML_TEMPLATE="""<?xml version="1.0" encoding="UTF-8"?>
 <module rename-to="${project.name}">
