@@ -1,10 +1,14 @@
 evaluationDependsOn(":user")
+evaluationDependsOn(":transfer")
 apply plugin: 'gwt'
 apply plugin: 'jetty'
 
 dependencies {
     compile project(':user')
     compile project(':contacts')
+    compile project(':accounts')
+    compile project(':transfer')
+
     compile 'javax.servlet:javax.servlet-api:3.1.0'
 
 }
@@ -21,6 +25,7 @@ gwt {
     }
 
     src +=files(project(':user').sourceSets.main.allJava.srcDirs) + files(project(':user').sourceSets.main.output.resourcesDir)
+    src +=files(project(':transfer').sourceSets.main.allJava.srcDirs) + files(project(':transfer').sourceSets.main.output.resourcesDir)
 }
 
 /**

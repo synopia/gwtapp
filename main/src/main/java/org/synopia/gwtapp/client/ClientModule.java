@@ -39,7 +39,5 @@ public class ClientModule extends AbstractGinModule {
         bind(ThemeController.class).toProvider(ThemeControllerProvider.class);
         bind(ErrorManager.class).toProvider(ErrorManagerProvider.class);
         bind(MvpController.class).toProvider(MvpControllerProvider.class);
-//        bind(MainPanel.class).in(Singleton.class);
-//        bind(LoginComposite.class).in(Singleton.class);
     }
 }

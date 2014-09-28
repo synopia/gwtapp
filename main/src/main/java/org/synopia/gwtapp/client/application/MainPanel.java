@@ -23,10 +23,14 @@ import fr.putnami.pwt.core.widget.client.binder.UiBinderLocalized;
 import org.synopia.gwtapp.contacts.client.view.addressbook.AddressBookPlace;
 import org.synopia.gwtapp.contacts.client.view.contactslist.ContactsPlace;
 import org.synopia.gwtapp.contacts.shared.constant.ErrorConstants;
+import org.synopia.gwtapp.transfer.client.view.TransferPlace;
+import org.synopia.gwtapp.transfer.client.view.TransferPresenter;
 import org.synopia.gwtapp.user.client.view.LoginComposite;
 
-public class MainPanel extends Composite implements AcceptsOneWidget {
+import java.util.logging.Logger;
 
+public class MainPanel extends Composite implements AcceptsOneWidget {
+    Logger logger = Logger.getLogger("MainPanel");
 	interface Binder extends UiBinderLocalized<HTMLPanel, MainPanel> {
 		Binder BINDER = GWT.create(Binder.class);
 	}
@@ -37,9 +41,12 @@ public class MainPanel extends Composite implements AcceptsOneWidget {
     @UiField
     SimplePanel login;
 
+//    @Inject
+//    TransferPresenter presenter;
 
     @Inject
-	public MainPanel(MvpController mvpController, ErrorManager errorManager, ThemeController themeController, AddressBookPlace addressBookPlace, ContactsPlace contactsPlace, LoginComposite loginComposite) {
+	public MainPanel(MvpController mvpController, ErrorManager errorManager, ThemeController themeController, TransferPlace transferPlace,  AddressBookPlace addressBookPlace, ContactsPlace contactsPlace, LoginComposite loginComposite) {
+        logger.info("MainPanel ");
 		initWidget(Binder.BINDER.createAndBindUi(this));
 
         Theme theme = new Theme();
@@ -52,10 +59,11 @@ public class MainPanel extends Composite implements AcceptsOneWidget {
         errorDisplayer.setConstants((ConstantsWithLookup) GWT.create(ErrorConstants.class));
         errorManager.setErrorDisplayer(errorDisplayer);
 
-        mvpController.setDefaultPlace(addressBookPlace);
+        mvpController.setDefaultPlace(transferPlace);
 
         mvpController.registerActivity(contactsPlace);
         mvpController.registerActivity(addressBookPlace);
+        mvpController.registerActivity(transferPlace);
 
         login.setWidget(loginComposite);
 

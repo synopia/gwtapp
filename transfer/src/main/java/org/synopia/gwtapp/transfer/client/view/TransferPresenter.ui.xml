@@ -1,0 +1,11 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:a="urn:import:fr.putnami.pwt.core.widget.client"
+             xmlns:i="urn:import:fr.putnami.pwt.core.widget.incubating"
+        >
+
+
+    <a:HTMLPanel>
+        <p>x</p>
+    </a:HTMLPanel>
+</ui:UiBinder>

@@ -90,7 +90,7 @@ subprojects {
         }
         def gwtFileName = "${project.name.capitalize()}.gwt.xml"
 
-        def file = new File(project.projectDir, "src/main/java/${groupDir}/${gwtFileName}")
+        def file = new File(project.projectDir, "src/main/java/${groupDir}/${project.name}/${gwtFileName}")
         print( file )
         file.createNewFile()
         file.write(GWT_XML_TEMPLATE)
